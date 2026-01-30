@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { useState } from "react";
 import styles from "./styles.module.scss";
 
@@ -26,7 +27,15 @@ export default function DashboardHeader({
       <header className={styles.header}>
         <div className={styles.mainContainer}>
           <Link href="/dashboard" className={styles.logo}>
-            <span className={styles.logoIcon}>🏛️</span>
+            <span className={styles.logoIcon}>
+              <Image
+                src="/images/logo.png"
+                alt="Logo"
+                width={62}
+                height={62}
+                priority
+              />
+            </span>
 
             <span className={styles.logoText}>
               <span className={styles.logoLine1}>IPRB-Presbiteriana</span>
@@ -72,7 +81,7 @@ export default function DashboardHeader({
                 onClick={handleLogoutConfirm}
                 className={styles.confirmBtn}
               >
-                Sim, sair
+                Sair
               </button>
               <button
                 onClick={() => setShowLogoutModal(false)}
