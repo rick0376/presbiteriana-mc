@@ -55,7 +55,9 @@
 }
 
 .btn,
-.btnSecondary {
+.btnSecondary,
+.btnPDF,
+.btnWhats {
   padding: 12px 16px;
   border-radius: 12px;
   font-weight: 800;
@@ -86,6 +88,30 @@
 
 .btnSecondary:hover {
   background: linear-gradient(135deg, #e0b12a 0%, #c46a06 100%);
+  transform: translateY(-3px);
+}
+
+.btnPDF {
+  background-color: #2563eb;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.btnPDF:hover {
+  background-color: #8bacf1;
+  color: #250202;
+  transform: translateY(-3px);
+}
+
+.btnWhats {
+  background-color: #25d366;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #f5f3f3;
+}
+
+.btnWhats:hover {
+  background-color: #056829;
   transform: translateY(-3px);
 }
 

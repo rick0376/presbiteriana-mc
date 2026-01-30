@@ -4,8 +4,7 @@ import { useEffect, useState } from "react";
 import ConfirmModal from "@/components/ui/ConfirmModal/ConfirmModal";
 import AlertModal from "@/components/ui/AlertModal/AlertModal";
 import styles from "./styles.module.scss";
-import { jsPDF } from "jspdf";
-import { FileText, MessageCircle, PencilLine, Trash2 } from "lucide-react";
+import { PencilLine, Trash2 } from "lucide-react";
 
 type Membro = {
   id: string;
@@ -40,7 +39,7 @@ export default function SecretariaPageClient({
   const [vencimento, setVencimento] = useState("");
   const [debouncedNome, setDebouncedNome] = useState("");
 
-  // ✅ estado aplicado (mantive igual ao seu, mesmo não usando)
+  // ✅ estado aplicado (o que realmente filtra)
   const [appliedNome, setAppliedNome] = useState("");
   const [appliedCargo, setAppliedCargo] = useState("");
   const [appliedVencimento, setAppliedVencimento] = useState("");
@@ -70,13 +69,6 @@ export default function SecretariaPageClient({
     setAlertTitle(title);
     setAlertMsg(message);
     setAlertOpen(true);
-  }
-
-  function formatDateBR(dateString?: string | null) {
-    if (!dateString) return "-";
-    const d = new Date(dateString);
-    if (Number.isNaN(d.getTime())) return "-";
-    return d.toLocaleDateString("pt-BR");
   }
 
   async function load(selectedIgrejaId?: string) {
@@ -153,10 +145,12 @@ export default function SecretariaPageClient({
             const first = j[0]?.id || "";
             setIgrejaId(first);
 
+            // primeira carga: sem filtros
             setAppliedNome("");
             setAppliedCargo("");
             setAppliedVencimento("");
             await load(first);
+
             return;
           }
 
@@ -170,6 +164,7 @@ export default function SecretariaPageClient({
         }
       }
 
+      // primeira carga: sem filtros
       setAppliedNome("");
       setAppliedCargo("");
       setAppliedVencimento("");
@@ -177,172 +172,6 @@ export default function SecretariaPageClient({
     })();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // =========================
-  // ✅ PDF (adaptado)
-  // =========================
-  const gerarPdfMembros = async () => {
-    if (items.length === 0) {
-      showAlert("Atenção", "Nenhum membro para gerar PDF.");
-      return;
-    }
-
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.width;
-    const pageHeight = doc.internal.pageSize.height;
-    const margin = 10;
-
-    let y = 50;
-
-    // tenta pegar logo do public/images/logo.png (se não existir, segue sem)
-    const getLogoBase64 = async () => {
-      try {
-        const origin = window.location.origin;
-        const resp = await fetch(`${origin}/images/logo.png`, {
-          cache: "no-store",
-        });
-        if (!resp.ok) return "";
-        const blob = await resp.blob();
-        return await new Promise<string>((resolve) => {
-          const reader = new FileReader();
-          reader.onloadend = () =>
-            resolve(typeof reader.result === "string" ? reader.result : "");
-          reader.onerror = () => resolve("");
-          reader.readAsDataURL(blob);
-        });
-      } catch {
-        return "";
-      }
-    };
-
-    const logoDataUri = await getLogoBase64();
-
-    const printHeader = () => {
-      doc.setFillColor(15, 11, 46);
-      doc.rect(0, 0, pageWidth, 40, "F");
-      doc.setFillColor(207, 155, 22);
-      doc.rect(0, 35, pageWidth, 5, "F");
-
-      if (logoDataUri) {
-        try {
-          doc.addImage(logoDataUri, "PNG", 10, 7, 18, 18);
-        } catch {}
-      }
-
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(16);
-      doc.setTextColor(255, 255, 255);
-      doc.text("RELATÓRIO DE MEMBROS", pageWidth / 2, 18, { align: "center" });
-
-      doc.setFont("helvetica", "normal");
-      doc.setFontSize(10);
-      doc.text(`Total: ${items.length}`, pageWidth / 2, 28, {
-        align: "center",
-      });
-    };
-
-    const printTableHeader = () => {
-      doc.setFontSize(8);
-      doc.setTextColor(230, 230, 230);
-      doc.setFont("helvetica", "bold");
-
-      doc.text("STATUS", margin, y);
-      doc.text("NOME", 28, y);
-      doc.text("CARGO", 110, y);
-      doc.text("VENC.", 150, y);
-
-      doc.setDrawColor(200, 200, 200);
-      doc.line(margin, y + 2, pageWidth - margin, y + 2);
-      y += 8;
-
-      doc.setTextColor(0, 0, 0);
-      doc.setFont("helvetica", "normal");
-    };
-
-    const checkPageBreak = (heightNeeded: number) => {
-      if (y + heightNeeded > pageHeight - 20) {
-        doc.addPage();
-        y = 50;
-        printHeader();
-        printTableHeader();
-      }
-    };
-
-    const printFooter = () => {
-      const totalPages = doc.getNumberOfPages();
-      const footerY = pageHeight - 10;
-
-      for (let i = 1; i <= totalPages; i++) {
-        doc.setPage(i);
-        doc.setDrawColor(200, 200, 200);
-        doc.setLineWidth(0.5);
-        doc.line(margin, footerY - 5, pageWidth - margin, footerY - 5);
-
-        doc.setFontSize(8);
-        doc.setTextColor(100, 100, 100);
-        doc.text(`Página ${i} de ${totalPages}`, pageWidth - margin, footerY, {
-          align: "right",
-        });
-      }
-    };
-
-    printHeader();
-    printTableHeader();
-
-    items.forEach((m) => {
-      checkPageBreak(10);
-
-      const s = getStatus(m.dataVencCarteirinha);
-
-      doc.setFontSize(8);
-
-      doc.setTextColor(0, 0, 0);
-      doc.text(s.label, margin, y);
-
-      const nomeTxt = doc.splitTextToSize(m.nome || "-", 78);
-      doc.text(nomeTxt, 28, y);
-
-      const cargoTxt = doc.splitTextToSize(m.cargo || "-", 35);
-      doc.text(cargoTxt, 110, y);
-
-      doc.text(formatDateBR(m.dataVencCarteirinha), 150, y);
-
-      doc.setDrawColor(245, 245, 245);
-      doc.line(margin, y + 5, pageWidth - margin, y + 5);
-
-      y += 10;
-    });
-
-    printFooter();
-    doc.save("relatorio-membros.pdf");
-  };
-
-  // =========================
-  // ✅ WhatsApp (adaptado)
-  // =========================
-  const enviarWhatsAppMembros = () => {
-    if (items.length === 0) {
-      showAlert("Atenção", "Nenhum membro para enviar no WhatsApp.");
-      return;
-    }
-
-    let texto = `👥 *RELATÓRIO DE MEMBROS*\n\n`;
-
-    items.forEach((m) => {
-      const s = getStatus(m.dataVencCarteirinha);
-      texto += `*${m.nome}*\n`;
-      texto += `Cargo: ${m.cargo}\n`;
-      texto += `Status carteirinha: ${s.label}\n`;
-      texto += `Venc.: ${formatDateBR(m.dataVencCarteirinha)}\n`;
-      if (m.telefone) texto += `📞 Telefone: ${m.telefone}\n`;
-      if (m.numeroCarteirinha)
-        texto += `🪪 Carteirinha: ${m.numeroCarteirinha}\n`;
-      texto += `------------------------------\n`;
-    });
-
-    const url = `https://api.whatsapp.com/send?text=${encodeURIComponent(texto)}`;
-    window.open(url, "_blank");
-  };
 
   return (
     <div className={styles.container}>
@@ -386,7 +215,7 @@ export default function SecretariaPageClient({
             onChange={(e) => {
               const id = e.target.value;
               setIgrejaId(id);
-              load(id);
+              load(id); // ✅ mantém igual
             }}
           >
             {igrejas.length === 0 ? (
@@ -407,28 +236,6 @@ export default function SecretariaPageClient({
           type="button"
         >
           Filtrar
-        </button>
-
-        {/* ✅ PDF */}
-        <button
-          className={styles.btnPDF}
-          onClick={gerarPdfMembros}
-          type="button"
-          title="Baixar PDF"
-        >
-          <FileText size={18} />
-          &nbsp;PDF
-        </button>
-
-        {/* ✅ WhatsApp */}
-        <button
-          className={styles.btnWhats}
-          onClick={enviarWhatsAppMembros}
-          type="button"
-          title="Enviar WhatsApp"
-        >
-          <MessageCircle size={18} />
-          &nbsp;Whats
         </button>
 
         <a className={styles.btnSecondary} href="/secretaria/membros/novo">
@@ -460,9 +267,7 @@ export default function SecretariaPageClient({
                     <span className={styles.k}>Venc.</span>
                     <span className={styles.v}>
                       {m.dataVencCarteirinha
-                        ? new Date(m.dataVencCarteirinha).toLocaleDateString(
-                            "pt-BR",
-                          )
+                        ? new Date(m.dataVencCarteirinha).toLocaleDateString()
                         : "-"}
                     </span>
                   </div>
