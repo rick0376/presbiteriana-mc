@@ -53,7 +53,7 @@ export default function Login() {
         <Link href="/igrejas" className={styles.back}>
           ← Voltar
         </Link>
-        <h1 className={styles.title}>Login LHP SaaS</h1>
+        <h1 className={styles.title}>Login Admin </h1>
 
         <input
           type="email"
