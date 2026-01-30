@@ -1,13 +1,9 @@
-export const runtime = "nodejs";
-export const dynamic = "force-dynamic";
-
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 
-type Context = {
-  params: Promise<{ id: string }>;
-};
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
 
 function jsonError(message: string, status = 400) {
   return NextResponse.json({ error: message }, { status });
@@ -35,8 +31,11 @@ async function resolveIgrejaId(user: {
 }
 
 /* ================== GET ================== */
-export async function GET(_req: NextRequest, context: Context) {
-  const { id } = await context.params;
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -47,13 +46,15 @@ export async function GET(_req: NextRequest, context: Context) {
   });
 
   if (!membro) return jsonError("Membro não encontrado.", 404);
-
   return NextResponse.json(membro);
 }
 
 /* ================== PUT ================== */
-export async function PUT(req: NextRequest, context: Context) {
-  const { id } = await context.params;
+export async function PUT(
+  req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -86,8 +87,11 @@ export async function PUT(req: NextRequest, context: Context) {
 }
 
 /* ================== DELETE ================== */
-export async function DELETE(_req: NextRequest, context: Context) {
-  const { id } = await context.params;
+export async function DELETE(
+  _req: NextRequest,
+  { params }: { params: Promise<{ id: string }> },
+) {
+  const { id } = await params;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -99,9 +103,6 @@ export async function DELETE(_req: NextRequest, context: Context) {
 
   if (!membro) return jsonError("Membro não encontrado.", 404);
 
-  await prisma.membro.delete({
-    where: { id },
-  });
-
+  await prisma.membro.delete({ where: { id } });
   return NextResponse.json({ ok: true });
 }
