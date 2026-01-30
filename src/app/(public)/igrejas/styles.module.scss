@@ -338,3 +338,13 @@
     height: 140px;
   }
 }
+.imgFallback {
+  width: 100%;
+  height: 240px; /* ajuste */
+  display: grid;
+  place-items: center;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+}

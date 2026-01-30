@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import styles from "./styles.module.scss";
+import { useState } from "react";
 
 const igrejas = [
   {
@@ -13,6 +14,8 @@ const igrejas = [
 ];
 
 export default function IgrejasPage() {
+  const [imgOk, setImgOk] = useState(true);
+
   return (
     <div className={styles.home}>
       {/* BANNER */}
@@ -61,7 +64,15 @@ export default function IgrejasPage() {
           </div>
 
           <div className={styles.bannerRight}>
-            <img src="/images/mulher.png" alt="Mulher orando" />
+            {imgOk ? (
+              <img
+                src="/images/pastor.png"
+                alt="Pastor Presidente"
+                onError={() => setImgOk(false)}
+              />
+            ) : (
+              <div className={styles.imgFallback}>Sem imagem</div>
+            )}
           </div>
         </div>
       </section>

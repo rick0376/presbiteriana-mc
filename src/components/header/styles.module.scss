@@ -244,7 +244,6 @@
   }
 }
 
-/* Celulares: garantir que o ☰ sempre apareça */
 @media (max-width: 640px) {
   .header {
     height: 72px;
@@ -262,7 +261,6 @@
     }
   }
 
-  /* userCard vira compacto pra sobrar espaço pro ☰ */
   .userCard {
     padding: 8px 10px;
     gap: 10px;
@@ -275,12 +273,10 @@
     font-size: 0.95rem;
   }
 
-  /* some infos no mobile */
   .userInfo {
     display: none;
   }
 
-  /* botão sair vira "icon-like" sem mexer no JSX */
   .logoutBtn {
     padding: 8px 10px;
     margin-left: 0;
@@ -288,7 +284,6 @@
     border-radius: 12px;
   }
 
-  /* garante que o menu fique visível */
   .menuToggle {
     width: 46px;
     height: 46px;
@@ -301,17 +296,14 @@
   }
 }
 
-/* Muito pequeno (320px): esconder texto "Sair" e deixar só espaço */
 @media (max-width: 360px) {
   .logoutBtn {
     width: 42px;
     height: 42px;
     padding: 0;
-    font-size: 0; /* esconde texto */
+    font-size: 0;
     position: relative;
   }
-
-  /* desenha um ícone simples no lugar (sem mexer no JSX) */
   .logoutBtn::after {
     content: "⎋";
     font-size: 16px;
