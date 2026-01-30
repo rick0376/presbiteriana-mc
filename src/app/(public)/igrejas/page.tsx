@@ -16,6 +16,14 @@ const igrejas = [
 export default function IgrejasPage() {
   const [imgOk, setImgOk] = useState(true);
 
+  const [buildOpen, setBuildOpen] = useState(false);
+  const [buildPage, setBuildPage] = useState("");
+
+  function openBuildModal(pageName: string) {
+    setBuildPage(pageName);
+    setBuildOpen(true);
+  }
+
   return (
     <div className={styles.home}>
       {/* BANNER */}
@@ -36,9 +44,21 @@ export default function IgrejasPage() {
             </p>
 
             <div className={styles.bannerButtons}>
-              <Link href="/eventos" className={styles.btnGreen}>
+              <button
+                type="button"
+                className={styles.btnGreen}
+                onClick={() => openBuildModal("Eventos")}
+              >
                 Eventos
-              </Link>
+              </button>
+
+              <button
+                type="button"
+                className={styles.btnRed}
+                onClick={() => openBuildModal("Eventos")}
+              >
+                Cronograma
+              </button>
 
               <Link href="/login" className={styles.btnBlue}>
                 Acesso
@@ -89,9 +109,13 @@ export default function IgrejasPage() {
               <h3>{item.nome}</h3>
               <p>{item.endereco}</p>
 
-              <Link href={`/igrejas/${item.slug}`} className={styles.btnVisit}>
+              <button
+                type="button"
+                className={styles.btnVisit}
+                onClick={() => openBuildModal(`Site da igreja: ${item.nome}`)}
+              >
                 Visitar Site
-              </Link>
+              </button>
             </div>
           </div>
         ))}
@@ -105,6 +129,32 @@ export default function IgrejasPage() {
       >
         <span>💬</span>
       </a>
+
+      {buildOpen && (
+        <div
+          className={styles.modalOverlay}
+          onClick={() => setBuildOpen(false)}
+        >
+          <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+            <div className={styles.modalIcon}>🚧</div>
+
+            <h3 className={styles.modalTitle}>Página em construção</h3>
+
+            <p className={styles.modalText}>
+              A área de <strong>{buildPage}</strong> ainda está sendo
+              desenvolvida.
+            </p>
+
+            <button
+              type="button"
+              className={styles.modalBtn}
+              onClick={() => setBuildOpen(false)}
+            >
+              Entendi
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
