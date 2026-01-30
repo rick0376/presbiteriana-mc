@@ -42,12 +42,12 @@
 }
 
 .logoLine1 {
-  font-size: 1.05rem;
+  font-size: 21px;
   margin-bottom: 3px;
 }
 
 .logoLine2 {
-  font-size: 0.85rem;
+  font-size: 16px;
   font-weight: 600;
   opacity: 0.85;
 }
@@ -123,21 +123,27 @@
 }
 
 .logoutBtn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  border-color: #ef4444;
   color: white;
-  border: none;
   padding: 8px 14px;
   border-radius: 10px;
   cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
   margin-left: 8px;
   transition: all 0.25s;
   flex: 0 0 auto;
 
   &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
+    background: linear-gradient(135deg, #dc2626, #b91c1c);
+    border-color: #b91c1c;
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 8px 28px rgba(239, 68, 68, 0.3);
+    color: white;
+
+    svg {
+      color: white !important;
+      transform: scale(1.15);
+    }
   }
 }
 
@@ -316,7 +322,30 @@
   }
 }
 
-@media (max-width: 390px) {
+@media (max-width: 470px) {
+  .userCard {
+    padding: 5px;
+  }
+  .logoLine1 {
+    font-size: 18px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 442px) {
+  .logoLine1 {
+    font-size: 16px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 412px) {
   .logoText {
     display: none;
   }
@@ -334,10 +363,51 @@
   }
 }
 
+@media (max-width: 390px) {
+  .logoText {
+    display: none;
+  }
+
+  .logoTextMobile {
+    display: grid;
+  }
+
+  .logoLine1 {
+    display: none;
+    font-size: 14px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
+  }
+
+  .userAvatar {
+    width: 28px;
+    height: 28px;
+  }
+
+  .logoutBtn {
+    width: 28px;
+    height: 28px;
+  }
+
+  .icoLogout {
+    width: 14px;
+    height: 14px;
+    display: block;
+    flex-shrink: 0;
+  }
+
+  .userCard {
+    width: 90px;
+    height: 40px;
+  }
+}
+
 @media (max-width: 360px) {
   .logoutBtn {
-    width: 42px;
-    height: 42px;
+    width: 28px;
+    height: 28px;
     padding: 0;
     font-size: 0;
     position: relative;

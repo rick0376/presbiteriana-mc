@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { useState } from "react";
 import styles from "./styles.module.scss";
+import { LogOut } from "lucide-react";
 
 export default function DashboardHeader({
   onMenuToggle,
@@ -59,7 +60,7 @@ export default function DashboardHeader({
                 onClick={() => setShowLogoutModal(true)}
                 className={styles.logoutBtn}
               >
-                Sair
+                <LogOut className={styles.icoLogout} size={18} />
               </button>
             </div>
             <button className={styles.menuToggle} onClick={onMenuToggle}>
