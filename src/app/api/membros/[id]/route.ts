@@ -6,7 +6,7 @@ import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 
 type Context = {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 };
 
 function jsonError(message: string, status = 400) {
@@ -36,12 +36,11 @@ async function resolveIgrejaId(user: {
 
 /* ================== GET ================== */
 export async function GET(_req: NextRequest, context: Context) {
+  const { id } = await context.params;
+
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
-
   if (!igrejaId) return jsonError("Igreja não encontrada.");
-
-  const { id } = context.params;
 
   const membro = await prisma.membro.findFirst({
     where: { id, igrejaId },
@@ -54,12 +53,12 @@ export async function GET(_req: NextRequest, context: Context) {
 
 /* ================== PUT ================== */
 export async function PUT(req: NextRequest, context: Context) {
+  const { id } = await context.params;
+
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
-
   if (!igrejaId) return jsonError("Igreja não encontrada.");
 
-  const { id } = context.params;
   const body = await req.json();
 
   const membro = await prisma.membro.findFirst({
@@ -88,12 +87,11 @@ export async function PUT(req: NextRequest, context: Context) {
 
 /* ================== DELETE ================== */
 export async function DELETE(_req: NextRequest, context: Context) {
+  const { id } = await context.params;
+
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
-
   if (!igrejaId) return jsonError("Igreja não encontrada.");
-
-  const { id } = context.params;
 
   const membro = await prisma.membro.findFirst({
     where: { id, igrejaId },
