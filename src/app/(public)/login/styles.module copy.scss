@@ -1,17 +1,9 @@
 .container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: radial-gradient(
-    circle at top,
-    #266c9e 0%,
-    #6696b6 40%,
-    #296592 100%
-  );
 }
-
 .card {
   background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   backdrop-filter: blur(20px);

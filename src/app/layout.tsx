@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
-import "./globals.scss"; // ou global.css
+import "./globals.scss";
 
 export const metadata: Metadata = {
   title: "LHP SaaS",
-  description: "Sistema igrejas",
+  description: "Sistemas de igrejas",
 };
 
 export default function RootLayout({

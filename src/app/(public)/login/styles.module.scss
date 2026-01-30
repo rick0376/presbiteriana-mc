@@ -1,14 +1,11 @@
 .container {
-  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 2rem;
-  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
 }
-
 .card {
-  background: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   padding: 3rem;
@@ -25,14 +22,6 @@
   margin-bottom: 2rem;
   font-size: 1.75rem;
   font-weight: 700;
-}
-
-.subtitle {
-  text-align: center;
-  color: white;
-  margin-bottom: 10px;
-  font-size: 18px;
-  font-weight: 400;
 }
 
 .input {

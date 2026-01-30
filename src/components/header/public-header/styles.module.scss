@@ -23,6 +23,7 @@
   align-items: center;
   gap: 12px;
   text-decoration: none;
+  color: #fff;
 }
 
 .logoImg {
@@ -33,12 +34,24 @@
 }
 
 .logoText {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+}
+
+.logoLine1 {
+  font-size: 21px;
+  margin-bottom: 3px;
+}
+
+.logoLine2 {
   font-size: 16px;
-  font-weight: 400;
-  letter-spacing: 1px;
-  color: #ffffff;
-  //text-transform: uppercase;
-  line-height: 1;
+  font-weight: 600;
+  opacity: 0.85;
+}
+
+.logoTextMobile {
+  display: none;
 }
 
 .actions {
@@ -75,10 +88,6 @@
 
 /* ===== RESPONSIVO ===== */
 @media (max-width: 520px) {
-  .logoText {
-    display: none; /* no celular fica só o logo */
-  }
-
   .logoImg {
     width: 42px;
     height: 42px;
@@ -87,5 +96,62 @@
   .superadminBtn {
     padding: 9px 12px;
     font-size: 13px;
+  }
+}
+
+@media (max-width: 470px) {
+  .logoLine1 {
+    font-size: 18px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 442px) {
+  .logoLine1 {
+    font-size: 16px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 412px) {
+  .logoText {
+    display: none;
+  }
+
+  .logoTextMobile {
+    display: grid;
+  }
+
+  .logoLine1 {
+    font-size: 14px;
+  }
+
+  .logoLine2 {
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 390px) {
+  .logoText {
+    display: none;
+  }
+
+  .logoTextMobile {
+    display: grid;
+  }
+
+  .logoLine1 {
+    display: none;
+    font-size: 14px;
+  }
+
+  .logoLine2 {
+    font-size: 14px;
   }
 }

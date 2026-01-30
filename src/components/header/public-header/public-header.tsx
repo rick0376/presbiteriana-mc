@@ -13,7 +13,13 @@ export default function PublicHeader() {
             className={styles.logoImg}
           />
           <span className={styles.logoText}>
-            IPRB - Igreja Presbiteriana Renovada
+            <span className={styles.logoLine1}>IPRB-Presbiteriana</span>
+            <span className={styles.logoLine2}>Renovada do Brasil</span>
+          </span>
+
+          <span className={styles.logoTextMobile}>
+            <span className={styles.logoLine1}>IPRB</span>
+            <span className={styles.logoLine2}>Presbiteriana Renovada</span>
           </span>
         </Link>
 
