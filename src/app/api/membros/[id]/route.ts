@@ -1,3 +1,6 @@
+export const runtime = "nodejs";
+export const dynamic = "force-dynamic";
+
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
@@ -24,22 +27,21 @@ async function resolveIgrejaId(user: {
     select: { id: true },
   });
 
-  return igreja?.id || null;
+  return igreja?.id ?? null;
 }
 
-/* ================== EDITAR ================== */
+/* ================== GET ================== */
 export async function GET(
   _req: Request,
-  context: { params: Promise<{ id: string }> },
+  { params }: { params: { id: string } },
 ) {
-  const { id } = await context.params;
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
 
   if (!igrejaId) return jsonError("Igreja não encontrada.");
 
   const membro = await prisma.membro.findFirst({
-    where: { id, igrejaId },
+    where: { id: params.id, igrejaId },
   });
 
   if (!membro) return jsonError("Membro não encontrado.", 404);
@@ -47,12 +49,11 @@ export async function GET(
   return NextResponse.json(membro);
 }
 
-/* ================== EDITAR ================== */
+/* ================== PUT ================== */
 export async function PUT(
   req: Request,
-  context: { params: Promise<{ id: string }> },
+  { params }: { params: { id: string } },
 ) {
-  const { id } = await context.params; // 🔴 OBRIGATÓRIO
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
 
@@ -61,13 +62,13 @@ export async function PUT(
   const body = await req.json();
 
   const membro = await prisma.membro.findFirst({
-    where: { id, igrejaId },
+    where: { id: params.id, igrejaId },
   });
 
   if (!membro) return jsonError("Membro não encontrado.", 404);
 
   const atualizado = await prisma.membro.update({
-    where: { id },
+    where: { id: params.id },
     data: {
       nome: body.nome,
       cargo: body.cargo,
@@ -84,25 +85,24 @@ export async function PUT(
   return NextResponse.json(atualizado);
 }
 
-/* ================== EXCLUIR ================== */
+/* ================== DELETE ================== */
 export async function DELETE(
   _req: Request,
-  context: { params: Promise<{ id: string }> },
+  { params }: { params: { id: string } },
 ) {
-  const { id } = await context.params; // 🔴 OBRIGATÓRIO
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
 
   if (!igrejaId) return jsonError("Igreja não encontrada.");
 
   const membro = await prisma.membro.findFirst({
-    where: { id, igrejaId },
+    where: { id: params.id, igrejaId },
   });
 
   if (!membro) return jsonError("Membro não encontrado.", 404);
 
   await prisma.membro.delete({
-    where: { id },
+    where: { id: params.id },
   });
 
   return NextResponse.json({ ok: true });
