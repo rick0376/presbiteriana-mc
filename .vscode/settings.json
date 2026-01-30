@@ -1,0 +1,5 @@
+{
+  "prisma.enableExperimentalLanguageServerFeatures": false,
+  "prisma.trace.server": "off",
+  "prisma.showEngineStatusBar": false
+}

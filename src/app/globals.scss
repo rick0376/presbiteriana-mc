@@ -1,0 +1,29 @@
+// src/app/globals.scss
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --foreground: #1e293b;
+  --background: radial-gradient(
+    circle at top,
+    #143750 0%,
+    #9ccae9 40%,
+    #0b263a 100%
+  );
+
+  --primary: #3b82f6;
+  --secondary: #64748b;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: "Inter", sans-serif;
+  background: var(--background);
+  color: var(--foreground);
+}

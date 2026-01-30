@@ -1,0 +1,24 @@
+.privateLayout {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+  color: white;
+}
+
+.dashboardGrid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  min-height: 100vh;
+}
+
+.contentWrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+  overflow: hidden;
+}
+
+.dashboardContent {
+  max-width: 1200px;
+  margin: 80px auto 0; // <- MUDE para 80px (era margin-top: 80px)
+  padding: 3rem 1rem;
+  min-height: calc(100vh - 80px);
+}

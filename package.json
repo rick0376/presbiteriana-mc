@@ -1,0 +1,29 @@
+{
+  "name": "saas_igreja_lhp",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "bcryptjs": "^3.0.3",
+    "lucide-react": "^0.563.0",
+    "next": "16.1.5",
+    "prisma": "^5.20.0",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "sass": "^1.97.3"
+  },
+  "devDependencies": {
+    "@types/node": "25.0.10",
+    "@types/react": "19.2.10",
+    "tsx": "^4.21.0",
+    "typescript": "^5"
+  }
+}

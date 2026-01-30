@@ -1,0 +1,46 @@
+.container {
+  background: linear-gradient(135deg, #1e293b 0%, #0f172a 50%, #1e1b4b 100%);
+  border-radius: 24px;
+  padding: 24px;
+  display: grid;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  color: #ffffff;
+  font-weight: 800;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.card {
+  text-decoration: none;
+  border-radius: 16px;
+  padding: 16px;
+  background: radial-gradient(
+    circle at top,
+    #266c9e 0%,
+    #6696b6 40%,
+    #296592 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+  color: #ffffff;
+  font-weight: 800;
+  transition: 0.2s;
+}
+
+.card:hover {
+  background: radial-gradient(
+    circle at top,
+    #2f7fb6 0%,
+    #c3e3f7 40%,
+    #2a76ab 100%
+  );
+  transform: translateY(-3px);
+}

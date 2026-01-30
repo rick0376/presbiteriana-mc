@@ -1,0 +1,179 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+
+  // nível do sistema
+  role          Role      @default(USER)
+
+  igrejaId      String?
+  senha         String
+
+  // função dentro da igreja (para permissões)
+  cargoId       String?
+  cargo         Cargo?    @relation(fields: [cargoId], references: [id])
+
+  igrejasAdmin  Igreja[]  @relation("IgrejaAdmin")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts      Account[]
+  sessions      Session[]
+  igreja        Igreja?   @relation(fields: [igrejaId], references: [id])
+
+  @@map("users")
+}
+
+model Igreja {
+  id        String   @id @default(cuid())
+  nome      String
+  slug      String   @unique
+  plano     Plano    @default(FREE)
+  adminId   String   @unique
+  membros   Int      @default(1)
+  eventos   Evento[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  admin     User     @relation("IgrejaAdmin", fields: [adminId], references: [id])
+  users     User[]
+
+  cargos    Cargo[]
+  membrosLista Membro[]
+
+  @@map("igrejas")
+}
+model Cargo {
+  id        String   @id @default(cuid())
+  nome      String
+  igrejaId  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  igreja    Igreja   @relation(fields: [igrejaId], references: [id])
+  users     User[]
+  permissoes CargoPermissao[]
+
+  @@unique([igrejaId, nome])
+  @@map("cargos")
+}
+
+model Permissao {
+  id        String   @id @default(cuid())
+  chave     String   @unique
+  descricao String?
+  createdAt DateTime @default(now())
+
+  cargos    CargoPermissao[]
+
+  @@map("permissoes")
+}
+
+model CargoPermissao {
+  id          String @id @default(cuid())
+  cargoId     String
+  permissaoId String
+
+  cargo       Cargo     @relation(fields: [cargoId], references: [id], onDelete: Cascade)
+  permissao   Permissao @relation(fields: [permissaoId], references: [id], onDelete: Cascade)
+
+  @@unique([cargoId, permissaoId])
+  @@map("cargo_permissoes")
+}
+
+model Membro {
+  id                     String   @id @default(cuid())
+  igrejaId               String
+
+  nome                   String
+  cargo                  String
+
+  telefone               String?  // whatsapp depois
+  numeroCarteirinha      String?  // pdf depois
+
+  dataNascimento         DateTime?
+  dataBatismo            DateTime?
+  dataCriacaoCarteirinha DateTime?
+  dataVencCarteirinha    DateTime?
+
+  observacoes            String?
+
+  createdAt              DateTime @default(now())
+  updatedAt              DateTime @updatedAt
+
+  igreja                 Igreja   @relation(fields: [igrejaId], references: [id], onDelete: Cascade)
+
+  @@index([igrejaId])
+  @@index([igrejaId, nome])
+  @@index([igrejaId, cargo])
+  @@index([igrejaId, dataVencCarteirinha])
+  @@map("membros")
+}
+
+model Evento {
+  id        String   @id @default(cuid())
+  titulo    String
+  data      DateTime
+  igrejaId  String
+  criadoPor String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  igreja Igreja @relation(fields: [igrejaId], references: [id])
+
+  @@map("eventos")
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  PASTOR
+  USER
+}
+
+enum Plano {
+  FREE
+  PRO
+  PREMIUM
+}

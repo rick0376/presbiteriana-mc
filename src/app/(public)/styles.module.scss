@@ -1,0 +1,20 @@
+.publicLayout {
+  min-height: 100vh;
+  // background: linear-gradient(to bottom, #ffffff 0%, #f1f5f9 100%);
+  background: radial-gradient(
+    circle at top,
+    #0f2a3d 0%,
+    #9ccae9 40%,
+    #04121c 100%
+  );
+}
+
+.headerSpace {
+  padding-top: 5rem;
+}
+
+.content {
+  padding: 3rem 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
