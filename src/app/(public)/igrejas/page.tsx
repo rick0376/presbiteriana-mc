@@ -2,6 +2,7 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useState } from "react";
+import { Radio, Volume2 } from "lucide-react";
 
 const igrejas = [
   {
@@ -30,6 +31,19 @@ export default function IgrejasPage() {
       <section className={styles.banner}>
         <div className={styles.bannerInner}>
           <div className={styles.bannerLeft}>
+            <div className={styles.topActions}>
+              <button
+                type="button"
+                className={styles.radioBtn}
+                onClick={() => openBuildModal("Rádio / Oração ao vivo")}
+              >
+                <span className={styles.radioIcon}>
+                  <Volume2 size={18} />
+                </span>
+                <span className={styles.radioText}>Rádio</span>
+                <span className={styles.radioBadge}>EM BREVE</span>
+              </button>
+            </div>
             <div className={styles.bannerTitle}>
               <img
                 src="/images/logo_transparente.png"

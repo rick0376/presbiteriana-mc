@@ -409,3 +409,85 @@
   color: #0b1220;
   background: linear-gradient(135deg, #22c55e, #16a34a);
 }
+
+/* ==========radio ================*/
+
+.topActions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 12px;
+}
+
+.radioBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  background: rgba(0, 0, 0, 0.25);
+  color: #fff;
+
+  cursor: pointer;
+  transition: 0.22s;
+  backdrop-filter: blur(14px);
+}
+
+.radioBtn:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.28);
+}
+
+.radioIcon {
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  background: linear-gradient(135deg, #22c55e, #16a34a);
+  color: #0b1220;
+}
+
+.radioText {
+  font-weight: 900;
+  letter-spacing: 0.2px;
+}
+
+.radioBadge {
+  font-size: 11px;
+  font-weight: 900;
+  padding: 4px 10px;
+  border-radius: 999px;
+
+  background: rgba(245, 158, 11, 0.18);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  color: #fbbf24;
+}
+
+/* mobile: compacta */
+@media (max-width: 520px) {
+  .radioBtn {
+    padding: 9px 12px;
+    gap: 8px;
+  }
+
+  .radioIcon {
+    width: 30px;
+    height: 30px;
+  }
+
+  .radioText {
+    font-size: 14px;
+  }
+
+  .radioBadge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+}
