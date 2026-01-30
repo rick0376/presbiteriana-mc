@@ -9,8 +9,6 @@ export default function Login() {
   const [senha, setSenha] = useState("123456");
   const [loading, setLoading] = useState(false);
 
-  const [imgOk, setImgOk] = useState(true);
-
   const [modalOpen, setModalOpen] = useState(false);
   const [modalMsg, setModalMsg] = useState("");
 
@@ -51,64 +49,6 @@ export default function Login() {
 
   return (
     <div className={styles.container}>
-      <section className={styles.banner}>
-        <div className={styles.bannerInner}>
-          <div className={styles.bannerLeft}>
-            <div className={styles.bannerTitle}>
-              <img
-                src="/images/logo_transparente.png"
-                alt="Logo Igreja Matriz"
-                className={styles.bannerLogo}
-              />
-              <h1>Igreja Presbiteriana Renovada </h1>
-            </div>
-
-            <p className={styles.bannerSubtitle}>
-              Cultos as Quartas, Sexta e Domingos
-            </p>
-
-            <div className={styles.bannerButtons}>
-              <Link href="/eventos" className={styles.btnGreen}>
-                Eventos
-              </Link>
-
-              <Link href="/login" className={styles.btnBlue}>
-                Acesso
-              </Link>
-            </div>
-
-            <div className={styles.bannerInfos}>
-              <div className={styles.infoItem}>
-                <span className={styles.dot}></span>
-                <p>Culto as 19:30 na Quarta / Sexta</p>
-              </div>
-
-              <div className={styles.infoItem}>
-                <span className={styles.dot}></span>
-                <p>Culto as 19:15 no domingo</p>
-              </div>
-
-              <div className={styles.infoItem}>
-                <span className={styles.dot}></span>
-                <p>Oração segunda, quarta e sexta as 8:00 hs e as 17:00 hs</p>
-              </div>
-            </div>
-          </div>
-
-          <div className={styles.bannerRight}>
-            {imgOk ? (
-              <img
-                src="/images/pastor.png"
-                alt="Pastor Presidente"
-                onError={() => setImgOk(false)}
-              />
-            ) : (
-              <div className={styles.imgFallback}>Sem imagem</div>
-            )}
-          </div>
-        </div>
-      </section>
-
       <form onSubmit={handleLogin} className={styles.card}>
         <Link href="/igrejas" className={styles.back}>
           ← Voltar
