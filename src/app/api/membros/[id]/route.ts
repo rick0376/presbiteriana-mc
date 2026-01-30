@@ -15,6 +15,12 @@ function parseDate(value: unknown): Date | null {
   return Number.isNaN(d.getTime()) ? null : d;
 }
 
+function getIdFromUrl(req: NextRequest) {
+  // /api/membros/{id}
+  const parts = req.nextUrl.pathname.split("/");
+  return parts[parts.length - 1];
+}
+
 async function resolveIgrejaId(user: {
   id: string;
   role: string;
@@ -31,8 +37,8 @@ async function resolveIgrejaId(user: {
 }
 
 /* ================== GET ================== */
-export async function GET(_req: NextRequest, ctx: any) {
-  const id = ctx.params.id;
+export async function GET(req: NextRequest) {
+  const id = getIdFromUrl(req);
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -47,8 +53,8 @@ export async function GET(_req: NextRequest, ctx: any) {
 }
 
 /* ================== PUT ================== */
-export async function PUT(req: NextRequest, ctx: any) {
-  const id = ctx.params.id;
+export async function PUT(req: NextRequest) {
+  const id = getIdFromUrl(req);
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -59,7 +65,6 @@ export async function PUT(req: NextRequest, ctx: any) {
   const membro = await prisma.membro.findFirst({
     where: { id, igrejaId },
   });
-
   if (!membro) return jsonError("Membro não encontrado.", 404);
 
   const atualizado = await prisma.membro.update({
@@ -81,8 +86,8 @@ export async function PUT(req: NextRequest, ctx: any) {
 }
 
 /* ================== DELETE ================== */
-export async function DELETE(_req: NextRequest, ctx: any) {
-  const id = ctx.params.id;
+export async function DELETE(req: NextRequest) {
+  const id = getIdFromUrl(req);
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -91,7 +96,6 @@ export async function DELETE(_req: NextRequest, ctx: any) {
   const membro = await prisma.membro.findFirst({
     where: { id, igrejaId },
   });
-
   if (!membro) return jsonError("Membro não encontrado.", 404);
 
   await prisma.membro.delete({ where: { id } });
