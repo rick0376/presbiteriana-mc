@@ -113,27 +113,50 @@ export default function EditarMembroClient({ id }: { id: string }) {
       </div>
 
       <form className={styles.form} onSubmit={save}>
+        <label htmlFor="nome" className={styles.label}>
+          Nome
+        </label>
         <input
+          id="nome"
+          name="nome"
           className={styles.input}
           placeholder="Nome"
           value={form.nome}
           onChange={(e) => setForm((p) => ({ ...p, nome: e.target.value }))}
           required
         />
+
+        <label htmlFor="cargo" className={styles.label}>
+          Cargo
+        </label>
         <input
+          id="cargo"
+          name="cargo"
           className={styles.input}
           placeholder="Cargo"
           value={form.cargo}
           onChange={(e) => setForm((p) => ({ ...p, cargo: e.target.value }))}
           required
         />
+
+        <label htmlFor="telefone" className={styles.label}>
+          Telefone
+        </label>
         <input
+          id="telefone"
+          name="telefone"
           className={styles.input}
           placeholder="Telefone"
           value={form.telefone}
           onChange={(e) => setForm((p) => ({ ...p, telefone: e.target.value }))}
         />
+
+        <label htmlFor="numeroCarteirinha" className={styles.label}>
+          Nº Carteirinha
+        </label>
         <input
+          id="numeroCarteirinha"
+          name="numeroCarteirinha"
           className={styles.input}
           placeholder="Nº Carteirinha"
           value={form.numeroCarteirinha}
@@ -141,51 +164,69 @@ export default function EditarMembroClient({ id }: { id: string }) {
             setForm((p) => ({ ...p, numeroCarteirinha: e.target.value }))
           }
         />
-        <label className={styles.label}>
+
+        <label htmlFor="dataNascimento" className={styles.label}>
           Data Nascimento
-          <input
-            className={styles.input}
-            type="date"
-            value={form.dataNascimento}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, dataNascimento: e.target.value }))
-            }
-          />
         </label>
-        <label className={styles.label}>
+        <input
+          id="dataNascimento"
+          name="dataNascimento"
+          className={styles.input}
+          type="date"
+          value={form.dataNascimento}
+          onChange={(e) =>
+            setForm((p) => ({ ...p, dataNascimento: e.target.value }))
+          }
+        />
+
+        <label htmlFor="dataBatismo" className={styles.label}>
           Data Batismo
-          <input
-            className={styles.input}
-            type="date"
-            value={form.dataBatismo}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, dataBatismo: e.target.value }))
-            }
-          />
         </label>
-        <label className={styles.label}>
+        <input
+          id="dataBatismo"
+          name="dataBatismo"
+          className={styles.input}
+          type="date"
+          value={form.dataBatismo}
+          onChange={(e) =>
+            setForm((p) => ({ ...p, dataBatismo: e.target.value }))
+          }
+        />
+
+        <label htmlFor="dataCriacaoCarteirinha" className={styles.label}>
           Data Criação Carteirinha
-          <input
-            className={styles.input}
-            type="date"
-            value={form.dataCriacaoCarteirinha}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, dataCriacaoCarteirinha: e.target.value }))
-            }
-          />
         </label>
-        <label className={styles.label}>
+        <input
+          id="dataCriacaoCarteirinha"
+          name="dataCriacaoCarteirinha"
+          className={styles.input}
+          type="date"
+          value={form.dataCriacaoCarteirinha}
+          onChange={(e) =>
+            setForm((p) => ({ ...p, dataCriacaoCarteirinha: e.target.value }))
+          }
+        />
+
+        <label htmlFor="dataVencCarteirinha" className={styles.label}>
           Data Vencimento Carteirinha
-          <input
-            className={styles.input}
-            type="date"
-            value={form.dataVencCarteirinha}
-            onChange={(e) =>
-              setForm((p) => ({ ...p, dataVencCarteirinha: e.target.value }))
-            }
-          />
+        </label>
+        <input
+          id="dataVencCarteirinha"
+          name="dataVencCarteirinha"
+          className={styles.input}
+          type="date"
+          value={form.dataVencCarteirinha}
+          onChange={(e) =>
+            setForm((p) => ({ ...p, dataVencCarteirinha: e.target.value }))
+          }
+        />
+
+        <label htmlFor="observacoes" className={styles.label}>
+          Observação
         </label>
         <textarea
+          id="observacoes"
+          name="observacoes"
           className={styles.textarea}
           placeholder="Observações"
           rows={3}
@@ -194,7 +235,9 @@ export default function EditarMembroClient({ id }: { id: string }) {
             setForm((p) => ({ ...p, observacoes: e.target.value }))
           }
         />
+
         {error && <div className={styles.error}>{error}</div>}
+
         <button className={styles.btn} disabled={saving}>
           {saving ? "Salvando..." : "Salvar"}
         </button>

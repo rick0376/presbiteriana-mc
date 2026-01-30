@@ -18,7 +18,6 @@
   align-items: center;
   justify-content: space-between;
   padding: 0 2rem;
-  gap: 12px;
 }
 
 .logo {
@@ -29,7 +28,6 @@
   color: white;
   font-weight: 700;
   font-size: 1.4rem;
-  white-space: nowrap;
 
   .logoIcon {
     font-size: 1.6rem;
@@ -39,22 +37,20 @@
 .rightSection {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  min-width: 0;
+  gap: 1.5rem;
 }
 
-/* ===== User card ===== */
 .userCard {
   display: flex;
   align-items: center;
   gap: 0.75rem;
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(20px);
-  padding: 0.75rem 1rem;
+  padding: 0.75rem 1.25rem;
   border-radius: 25px;
   border: 1px solid rgba(255, 255, 255, 0.2);
+  cursor: pointer;
   transition: all 0.3s;
-  min-width: 0;
 
   &:hover {
     background: rgba(255, 255, 255, 0.25);
@@ -73,55 +69,25 @@
   font-weight: 700;
   color: white;
   font-size: 1rem;
-  flex: 0 0 auto;
 }
 
 .userInfo {
   display: flex;
   flex-direction: column;
-  min-width: 0;
 }
 
 .userName {
   font-weight: 600;
   color: white;
   font-size: 0.95rem;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 220px;
 }
 
 .userRole {
   font-size: 0.8rem;
   color: #93c5fd;
   font-weight: 500;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  max-width: 220px;
 }
 
-.logoutBtn {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
-  border: none;
-  padding: 8px 14px;
-  border-radius: 10px;
-  cursor: pointer;
-  font-size: 14px;
-  font-weight: 700;
-  margin-left: 8px;
-  transition: all 0.25s;
-  flex: 0 0 auto;
-
-  &:hover {
-    transform: translateY(-1px);
-    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.25);
-  }
-}
-
-/* ===== Menu button (☰) ===== */
 .menuToggle {
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(20px);
@@ -132,30 +98,43 @@
   border-radius: 14px;
   font-size: 1.3rem;
   cursor: pointer;
-  transition: all 0.25s;
-  flex: 0 0 auto;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  transition: all 0.3s;
 
   &:hover {
     background: rgba(255, 255, 255, 0.3);
-    transform: rotate(90deg) scale(1.05);
+    transform: rotate(90deg) scale(1.1);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   }
 }
 
-/* ===================== MODAL ===================== */
+.logoutBtn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 12px;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
 .logoutModal {
   position: fixed;
-  inset: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 9999;
   backdrop-filter: blur(4px);
-  padding: 16px;
 }
 
 .modalContent {
@@ -163,7 +142,7 @@
   border-radius: 16px;
   padding: 32px;
   text-align: center;
-  width: min(420px, 100%);
+  max-width: 400px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
   animation: modalSlide 0.3s ease-out;
 }
@@ -172,13 +151,11 @@
   font-size: 48px;
   margin-bottom: 16px;
 }
-
 .modalContent h3 {
   margin: 0 0 8px 0;
   color: #333;
   font-size: 24px;
 }
-
 .modalContent p {
   color: #666;
   margin-bottom: 24px;
@@ -188,7 +165,6 @@
   display: flex;
   gap: 12px;
   justify-content: center;
-  flex-wrap: wrap;
 }
 
 .confirmBtn {
@@ -196,12 +172,11 @@
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 700;
-
+  font-weight: 600;
   &:hover {
-    opacity: 0.92;
+    opacity: 0.9;
   }
 }
 
@@ -210,10 +185,9 @@
   color: #666;
   border: 1px solid #dee2e6;
   padding: 12px 24px;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
-  font-weight: 600;
-
+  font-weight: 500;
   &:hover {
     background: #e9ecef;
   }
@@ -222,109 +196,10 @@
 @keyframes modalSlide {
   from {
     opacity: 0;
-    transform: scale(0.92) translateY(-12px);
+    transform: scale(0.8) translateY(-20px);
   }
   to {
     opacity: 1;
     transform: scale(1) translateY(0);
-  }
-}
-
-/* ===================== RESPONSIVO ===================== */
-
-/* Tablets / telas menores */
-@media (max-width: 900px) {
-  .mainContainer {
-    padding: 0 1rem;
-  }
-
-  .userName,
-  .userRole {
-    max-width: 140px;
-  }
-}
-
-/* Celulares: garantir que o ☰ sempre apareça */
-@media (max-width: 640px) {
-  .header {
-    height: 72px;
-  }
-
-  .mainContainer {
-    padding: 0 12px;
-  }
-
-  .logo {
-    font-size: 1.1rem;
-
-    .logoIcon {
-      font-size: 1.35rem;
-    }
-  }
-
-  /* userCard vira compacto pra sobrar espaço pro ☰ */
-  .userCard {
-    padding: 8px 10px;
-    gap: 10px;
-    border-radius: 18px;
-  }
-
-  .userAvatar {
-    width: 36px;
-    height: 36px;
-    font-size: 0.95rem;
-  }
-
-  /* some infos no mobile */
-  .userInfo {
-    display: none;
-  }
-
-  /* botão sair vira "icon-like" sem mexer no JSX */
-  .logoutBtn {
-    padding: 8px 10px;
-    margin-left: 0;
-    font-size: 12px;
-    border-radius: 12px;
-  }
-
-  /* garante que o menu fique visível */
-  .menuToggle {
-    width: 46px;
-    height: 46px;
-    border-radius: 12px;
-    font-size: 1.25rem;
-  }
-
-  .rightSection {
-    gap: 10px;
-  }
-}
-
-/* Muito pequeno (320px): esconder texto "Sair" e deixar só espaço */
-@media (max-width: 360px) {
-  .logoutBtn {
-    width: 42px;
-    height: 42px;
-    padding: 0;
-    font-size: 0; /* esconde texto */
-    position: relative;
-  }
-
-  /* desenha um ícone simples no lugar (sem mexer no JSX) */
-  .logoutBtn::after {
-    content: "⎋";
-    font-size: 16px;
-    font-weight: 900;
-    color: #fff;
-    position: absolute;
-    inset: 0;
-    display: grid;
-    place-items: center;
-  }
-
-  .userCard {
-    padding: 6px 8px;
-    gap: 8px;
   }
 }

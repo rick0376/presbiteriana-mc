@@ -37,15 +37,8 @@
   min-width: 180px;
 }
 
-.input:focus {
-  border-color: rgba(156, 202, 233, 0.8);
-  box-shadow: 0 0 0 3px rgba(156, 202, 233, 0.18);
-}
-
+.input:focus,
 .select:focus {
-  color: #000; /* texto preto */
-  background: #fff; /* opcional: fundo branco pra combinar */
-  outline: none;
   border-color: rgba(156, 202, 233, 0.8);
   box-shadow: 0 0 0 3px rgba(156, 202, 233, 0.18);
 }
@@ -93,7 +86,47 @@
   color: rgba(255, 255, 255, 0.75);
 }
 
-/* ====== STATUS PILLS ====== */
+.tableWrap {
+  overflow-x: auto;
+  border-radius: 16px;
+  // background: rgba(0, 0, 0, 0.35);
+  background: radial-gradient(
+    circle at top,
+    #266c9e 0%,
+    #6696b6 40%,
+    #296592 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.35);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #ffffff;
+}
+
+.table th,
+.table td {
+  padding: 12px 14px;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.table th {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.table tr:hover td {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.empty {
+  padding: 16px !important;
+  color: rgba(255, 255, 255, 0.75);
+}
 .ok {
   background: #22c55e;
   color: #0b1220;
@@ -125,7 +158,6 @@
   border-radius: 999px;
 }
 
-/* ====== ACTION BUTTONS (reused in cards) ====== */
 .actions {
   display: flex;
   align-items: center;
@@ -142,13 +174,13 @@
   align-items: center;
   transition: all 0.2s ease;
   border: 1px solid transparent;
+  // background: white;
 }
 
 .edit {
   background: #f59e0b;
   color: #fffbeb;
   padding-right: 10px;
-
   &:hover {
     background: white;
     color: #f59e0b;
@@ -160,122 +192,10 @@
 .delete {
   background-color: #ef4444;
   color: #fee2e2;
-
   &:hover {
     background-color: #fee2e2;
     color: #ef4444;
     transform: translateY(-2px);
     box-shadow: 0 2px 6px rgba(139, 92, 246, 0.25);
-  }
-}
-
-/* ====== CARDS (ALL SIZES) ====== */
-.cards {
-  display: grid;
-  gap: 12px;
-
-  /* 1 col by default (mobile-first) */
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-}
-
-/* 2 cols */
-@media (min-width: 640px) {
-  .cards {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
-
-/* 3 cols */
-@media (min-width: 900px) {
-  .cards {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-
-/* 4 cols (max) */
-@media (min-width: 1200px) {
-  .cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
-
-.card {
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: radial-gradient(
-    circle at top,
-    #266c9e 0%,
-    #6696b6 40%,
-    #296592 100%
-  );
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25);
-  padding: 12px;
-  display: grid;
-  gap: 10px;
-}
-
-.cardHeader {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-
-.cardTitle {
-  color: #fff;
-  font-weight: 800;
-  line-height: 1.2;
-}
-
-.cardBody {
-  display: grid;
-  gap: 8px;
-}
-
-.row {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.k {
-  color: rgba(255, 255, 255, 0.75);
-  font-weight: 700;
-}
-
-.v {
-  color: #fff;
-  font-weight: 700;
-  text-align: right;
-}
-
-.cardActions {
-  display: flex;
-  gap: 10px;
-  justify-content: flex-end;
-}
-
-/* ====== EMPTY ====== */
-.emptyCard {
-  padding: 16px;
-  border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.75);
-  text-align: center;
-
-  /* make empty span full width in grid */
-  grid-column: 1 / -1;
-}
-
-/* ====== RESPONSIVE FILTERS ====== */
-@media (max-width: 768px) {
-  .input,
-  .select {
-    min-width: 100%;
-  }
-
-  .filters {
-    gap: 8px;
   }
 }
