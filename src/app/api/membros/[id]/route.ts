@@ -31,11 +31,8 @@ async function resolveIgrejaId(user: {
 }
 
 /* ================== GET ================== */
-export async function GET(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
+export async function GET(_req: NextRequest, ctx: any) {
+  const id = ctx.params.id;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -50,11 +47,8 @@ export async function GET(
 }
 
 /* ================== PUT ================== */
-export async function PUT(
-  req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
+export async function PUT(req: NextRequest, ctx: any) {
+  const id = ctx.params.id;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
@@ -87,11 +81,8 @@ export async function PUT(
 }
 
 /* ================== DELETE ================== */
-export async function DELETE(
-  _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> },
-) {
-  const { id } = await params;
+export async function DELETE(_req: NextRequest, ctx: any) {
+  const id = ctx.params.id;
 
   const user = await requireUser();
   const igrejaId = await resolveIgrejaId(user);
