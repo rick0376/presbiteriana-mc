@@ -17,9 +17,9 @@ export default function DashboardHeader({
   const handleLogoutConfirm = async () => {
     try {
       await fetch("/api/logout", { method: "POST" });
-      router.replace("/login");
+      router.replace("/igrejas");
     } catch {
-      router.replace("/login");
+      router.replace("/igrejas");
     }
   };
 
