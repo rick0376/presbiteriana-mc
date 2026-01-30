@@ -2,6 +2,9 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import { requireUser } from "@/lib/auth";
 
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
+
 export async function GET() {
   const user = await requireUser();
 
@@ -14,5 +17,7 @@ export async function GET() {
     orderBy: { nome: "asc" },
   });
 
-  return NextResponse.json(igrejas);
+  return NextResponse.json(igrejas, {
+    headers: { "Cache-Control": "no-store" },
+  });
 }
