@@ -1,18 +1,19 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { prisma } from "@/lib/prisma";
 
 export const dynamic = "force-dynamic";
 export const runtime = "nodejs";
 
-export async function POST(_req: NextRequest) {
-  const response = NextResponse.json(
-    { ok: true },
-    { headers: { "Cache-Control": "no-store" } },
-  );
+export async function POST(req: NextRequest) {
+  const token = req.cookies.get("token")?.value;
 
-  response.cookies.set("token", "", {
-    path: "/",
-    maxAge: 0,
-  });
+  if (token) {
+    await prisma.session.deleteMany({
+      where: { sessionToken: token },
+    });
+  }
 
-  return response;
+  const res = NextResponse.json({ ok: true }, { status: 200 });
+  res.cookies.delete("token");
+  return res;
 }

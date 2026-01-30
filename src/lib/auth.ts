@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 
 export async function getCurrentUser() {
-  const cookieStore = await cookies();
+  const cookieStore = await cookies(); // ✅ precisa await no seu setup
   const sessionToken = cookieStore.get("token")?.value;
 
   if (!sessionToken) return null;
@@ -13,9 +13,7 @@ export async function getCurrentUser() {
     include: { user: true },
   });
 
-  if (!session || session.expires < new Date()) {
-    return null;
-  }
+  if (!session || session.expires < new Date()) return null;
 
   return session.user;
 }
@@ -27,7 +25,5 @@ export async function requireUser() {
 }
 
 export function requireRole(user: { role: string }, roles: string[]) {
-  if (!roles.includes(user.role)) {
-    redirect("/sem-permissao");
-  }
+  if (!roles.includes(user.role)) redirect("/sem-permissao");
 }

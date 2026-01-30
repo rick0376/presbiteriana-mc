@@ -19,27 +19,22 @@ export default function Login() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
 
-    try {
-      const res = await fetch("/api/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, senha }),
-      });
+    console.log("LOGIN PAGE: submit");
 
-      if (res.ok) {
-        window.location.href = "/dashboard";
-        return;
-      }
+    const res = await fetch("/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email, senha }),
+      credentials: "include", // <-- COLOQUE ISSO
+    });
 
-      const json = await res.json().catch(() => ({}) as any);
-      openModal(json?.error || "Senha inválida");
-    } catch {
-      openModal("Erro servidor");
-    } finally {
-      setLoading(false);
-    }
+    console.log("LOGIN PAGE: status", res.status);
+
+    const data = await res.json();
+    console.log("LOGIN PAGE: response body", data);
+
+    window.location.replace("/dashboard");
   };
 
   return (

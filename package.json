@@ -4,27 +4,30 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "postinstall": "prisma generate",
-    "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "build": "prisma generate && prisma migrate deploy && next build",
-    "start": "next start"
+    "build": "next build",
+    "start": "next start",
+    "postinstall": "prisma generate"
   },
   "prisma": {
-    "seed": "node prisma/seed.js"
+    "seed": "tsx prisma/seed.ts"
+  },
+  "engines": {
+    "node": "20.x"
   },
   "dependencies": {
-    "@prisma/client": "^5.20.0",
+    "@prisma/client": "6.17.1",
     "bcryptjs": "^3.0.3",
     "lucide-react": "^0.563.0",
-    "next": "16.1.5",
-    "prisma": "^5.20.0",
-    "react": "19.2.3",
-    "react-dom": "19.2.3",
+    "next": "^15.5.7",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
     "sass": "^1.97.3"
   },
   "devDependencies": {
-    "@types/node": "25.0.10",
-    "@types/react": "19.2.10",
+    "@types/node": "20.x",
+    "@types/react": "18.x",
+    "@types/react-dom": "18.x",
+    "prisma": "6.17.1",
     "tsx": "^4.21.0",
     "typescript": "^5"
   }
