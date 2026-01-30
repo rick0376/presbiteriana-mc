@@ -1,43 +1,57 @@
-import { NextResponse, NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
 import bcrypt from "bcryptjs";
-import crypto from "crypto";
+
+export const dynamic = "force-dynamic";
+export const runtime = "nodejs";
 
 export async function POST(req: NextRequest) {
   try {
     const { email, senha } = await req.json();
 
-    const user = await prisma.user.findUnique({ where: { email } });
-    if (!user || !(await bcrypt.compare(senha, user.senha))) {
+    if (!email || !senha) {
+      return NextResponse.json({ error: "Dados inválidos" }, { status: 400 });
+    }
+
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    if (!user || !user.senha) {
       return NextResponse.json(
         { error: "Credenciais inválidas" },
         { status: 401 },
       );
     }
 
-    const sessionToken = crypto.randomUUID();
-    const expires = new Date(Date.now() + 1000 * 60 * 60 * 24 * 7);
+    const ok = await bcrypt.compare(senha, user.senha);
 
-    await prisma.session.create({
-      data: {
-        sessionToken,
-        userId: user.id,
-        expires,
+    if (!ok) {
+      return NextResponse.json(
+        { error: "Credenciais inválidas" },
+        { status: 401 },
+      );
+    }
+
+    const token = `lhp-${user.id}-${Date.now()}`;
+
+    const res = NextResponse.json({
+      user: {
+        id: user.id,
+        name: user.name,
+        email: user.email,
+        role: user.role,
       },
     });
 
-    const response = NextResponse.json({
-      user: { id: user.id, name: user.name, role: user.role },
-    });
-
-    response.cookies.set("token", sessionToken, {
+    res.cookies.set("token", token, {
       httpOnly: true,
       path: "/",
       maxAge: 60 * 60 * 24 * 7,
     });
 
-    return response;
+    return res;
   } catch {
-    return NextResponse.json({ error: "Erro servidor" }, { status: 500 });
+    return NextResponse.json({ error: "Erro interno" }, { status: 500 });
   }
 }
